@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:restaurant_booking_system/model/menu.dart';
+import 'package:restaurant_booking_system/component/booking_page.dart';
+import 'package:restaurant_booking_system/component/dish_page.dart';
+import 'package:restaurant_booking_system/component/list_page.dart';
+import 'package:restaurant_booking_system/model/dish.dart';
 import 'package:restaurant_booking_system/model/place.dart';
 
 class HomePage extends StatefulWidget {
@@ -41,11 +44,16 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-class HomePageMobile extends StatelessWidget {
+class HomePageMobile extends StatefulWidget {
   //final Menu menu;
 
   const HomePageMobile({Key? key}) : super(key: key);
 
+  @override
+  State<HomePageMobile> createState() => _HomePageMobileState();
+}
+
+class _HomePageMobileState extends State<HomePageMobile> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -76,7 +84,7 @@ class HomePageMobile extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(right: 10.0),
-                  child: Icon(Icons.account_circle),
+                  child: Icon(Icons.account_circle, size: 30.0),
                 ),
               ],
             ),
@@ -94,7 +102,7 @@ class HomePageMobile extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const <Widget>[
+                children: <Widget>[
                   Text(
                     'Menu',
                     style: TextStyle(
@@ -102,65 +110,81 @@ class HomePageMobile extends StatelessWidget {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  Icon(Icons.list),
+                  IconButton(
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) {
+                        return ListPage(title: 'Dish');
+                      }));
+                    },
+                    icon: Icon(Icons.list),
+                  ),
                 ],
               ),
             ),
             SizedBox(height: 20.0),
             SizedBox(
               height: 210,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: listMenu.map((menu) {
-                  var imageURL = menu.imageURL;
-                  return Card(
-                    shape: RoundedRectangleBorder(
-                      side: BorderSide(
-                        color: Theme.of(context).colorScheme.outline,
-                      ),
-                      borderRadius: const BorderRadius.all(Radius.circular(12)),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Column(
-                        children: [
-                          Container (
-                            height: 120,
-                            width: 120,
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(10),
-                              child: Image.asset(imageURL, fit: BoxFit.cover),
-                            ),
+              child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: listDish.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    final Dish dish = listDish[index];
+                    return InkWell(
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) {
+                          return DishPage(dish: dish);
+                        }));
+                      },
+                      child: Card(
+                        shape: RoundedRectangleBorder(
+                          side: BorderSide(
+                            color: Theme.of(context).colorScheme.outline,
                           ),
-                          SizedBox(height: 10.0),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                          borderRadius: const BorderRadius.all(Radius.circular(12)),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Column(
                             children: [
-                              Column(
+                              Container (
+                                height: 120,
+                                width: 120,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: Image.asset(dish.imageURL, fit: BoxFit.cover),
+                                ),
+                              ),
+                              SizedBox(height: 10.0),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    menu.name,
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        dish.name,
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      SizedBox(height: 5.0),
+                                      Text(dish.description),
+                                    ],
                                   ),
-                                  SizedBox(height: 5.0),
-                                  Text(menu.description),
+                                  Icon(
+                                    //Icons.star_border,
+                                    dish.isFav ? Icons.star : Icons.star_border,
+                                    color: Colors.amber,
+                                  ),
                                 ],
-                              ),
-                              const Icon(
-                                Icons.star_border,
-                                color: Colors.amber,
                               ),
                             ],
                           ),
-                        ],
+                        ),
                       ),
-                    ),
-                  );
-                }).toList(),
+                    );
+                  }
               ),
             ),
             SizedBox(height: 20.0),
@@ -168,7 +192,7 @@ class HomePageMobile extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const <Widget>[
+                children: <Widget>[
                   Text(
                     'Place',
                     style: TextStyle(
@@ -176,7 +200,14 @@ class HomePageMobile extends StatelessWidget {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  Icon(Icons.list),
+                  IconButton(
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) {
+                        return ListPage(title: 'Place');
+                      }));
+                    },
+                    icon: Icon(Icons.list),
+                  ),
                 ],
               ),
             ),
@@ -186,6 +217,9 @@ class HomePageMobile extends StatelessWidget {
         ),
       ),
     );
+  }
+  refresh() {
+    setState(() {});
   }
 }
 
@@ -197,11 +231,11 @@ class RestaurantPlaceList extends StatelessWidget {
     return ListView.builder(
       shrinkWrap: true,
       itemBuilder: (context, index) {
-        final Place placeList = restaurantPlaceList[index];
+        final Place place = restaurantPlaceList[index];
         return InkWell(
           onTap: () {
             Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return HomePageMobile();
+              return BookingPage(place: place);
             }));
           },
           child: Card(
@@ -218,9 +252,13 @@ class RestaurantPlaceList extends StatelessWidget {
                   flex: 1,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: Image.asset(placeList.imageURL),
+                    child: Container(
+                      height: 100,
+                      width: 120,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Image.asset(place.imageURL, fit: BoxFit.cover),
+                      ),
                     ),
                   ),
                 ),
@@ -233,12 +271,12 @@ class RestaurantPlaceList extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            placeList.name,
+                            place.name,
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          Text(placeList.description),
+                          Text(place.description),
                           Divider(),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -274,3 +312,18 @@ class RestaurantPlaceList extends StatelessWidget {
     );
   }
 }
+
+// class FavoriteDish extends StatefulWidget {
+//   final Function() updateFavorite;
+//   const FavoriteDish({Key? key, required this.updateFavorite}) : super(key: key);
+//
+//   @override
+//   _FavoriteDishState createState() => _FavoriteDishState();
+// }
+// class _FavoriteDishState extends State<FavoriteDish> {
+//   _FavoriteDishState();
+//
+//   Widget build(BuildContext context) {
+//     return
+//   }
+// }
