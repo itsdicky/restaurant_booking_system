@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:restaurant_booking_system/component/home_page.dart';
 
 import '../model/dish.dart';
 
@@ -13,9 +12,9 @@ class DishPage extends StatelessWidget {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         if (constraints.maxWidth > 800) {
-          return DishPageMobile(dish: this.dish);
+          return DishPageMobile(dish: dish);
         } else {
-          return DishPageMobile(dish: this.dish);
+          return DishPageMobile(dish: dish);
         }
       },
     );
@@ -31,39 +30,37 @@ class DishPageMobile extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.all(12.0),
+          padding: const EdgeInsets.all(12.0),
           child: Column(
             children: [
               Row(
                 children: [
-                  CircleAvatar(
-                    backgroundColor: Colors.white,
-                    child: IconButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      icon: const Icon(
-                        Icons.arrow_back_rounded,
-                        color: Colors.black,
-                      ),
+                  IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: const Icon(
+                      Icons.arrow_back_rounded,
+                      color: Colors.black,
                     ),
                   ),
-                  SizedBox(width: 20.0),
+                  const SizedBox(width: 20.0),
                   Text(
                     dish.name,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontWeight: FontWeight.bold,
+                      fontSize: 18,
                     ),
                   ),
                 ],
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 30.0),
               SizedBox(
                 // height: 200,
                 // width: double.infinity,
                 child: Stack(
                   children: [
-                    Container(
+                    SizedBox(
                       height: 200,
                       width: 400,
                       child: ClipRRect(
@@ -72,14 +69,14 @@ class DishPageMobile extends StatelessWidget {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.only(left: 10.0, top: 10.0),
-                      child: FavoriteButton(dish: this.dish),
+                      margin: const EdgeInsets.only(left: 10.0, top: 10.0),
+                      child: FavoriteButton(dish: dish),
                     ),
                   ],
                 ),
               ),
-              SizedBox(height: 20.0),
-              Container(
+              const SizedBox(height: 20.0),
+              SizedBox(
                 width: double.infinity,
                 child: Card(
                   shape: RoundedRectangleBorder(
@@ -89,18 +86,39 @@ class DishPageMobile extends StatelessWidget {
                     borderRadius: const BorderRadius.all(Radius.circular(12)),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Column(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          dish.name,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              dish.name,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(height: 10.0),
+                            Text(
+                              dish.description,
+                              style: const TextStyle(
+                                color: Colors.black54,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 10.0),
+                          child: Text(
+                            'Rp${dish.price}',
+                            style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                         ),
-                        SizedBox(height: 10.0),
-                        Text(dish.description),
                       ],
                     ),
                   ),

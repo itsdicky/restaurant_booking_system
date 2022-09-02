@@ -14,38 +14,18 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int _selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('HomePage'),
-      ),
+    return const Scaffold(
       body: SafeArea(
-        child: const HomePageMobile(),
+        child: HomePageMobile(),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.add_circle_rounded), label: 'Book'),
-          BottomNavigationBarItem(icon: Icon(Icons.add_circle_rounded), label: 'Book'),
-          BottomNavigationBarItem(icon: Icon(Icons.add_circle_rounded), label: 'Book'),
-        ],
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-      ),
-
     );
-  }
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
   }
 }
 
 class HomePageMobile extends StatefulWidget {
-  //final Menu menu;
 
   const HomePageMobile({Key? key}) : super(key: key);
 
@@ -66,7 +46,7 @@ class _HomePageMobileState extends State<HomePageMobile> {
               children: [
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+                  children: const <Widget>[
                     Text(
                       'Hi, Customer!',
                       style: TextStyle(
@@ -82,13 +62,13 @@ class _HomePageMobileState extends State<HomePageMobile> {
                     ),
                   ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 10.0),
-                  child: Icon(Icons.account_circle, size: 30.0),
+                const Padding(
+                  padding: EdgeInsets.only(right: 10.0),
+                  child: Icon(Icons.account_circle, size: 30.0, color: Colors.grey),
                 ),
               ],
             ),
-            SizedBox(height: 30.0),
+            const SizedBox(height: 30.0),
             SizedBox(
               height: 160,
               width: 400,
@@ -97,13 +77,13 @@ class _HomePageMobileState extends State<HomePageMobile> {
                 child: Image.asset('assets/images/pexels-life-of-pix-67468.jpg', fit: BoxFit.cover,),
               ),
             ),
-            SizedBox(height: 30.0),
+            const SizedBox(height: 30.0),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Text(
+                  const Text(
                     'Menu',
                     style: TextStyle(
                       fontSize: 16,
@@ -113,17 +93,17 @@ class _HomePageMobileState extends State<HomePageMobile> {
                   IconButton(
                     onPressed: () {
                       Navigator.push(context, MaterialPageRoute(builder: (context) {
-                        return ListPage(title: 'Dish');
+                        return const ListPage(title: 'Dish');
                       }));
                     },
-                    icon: Icon(Icons.list),
+                    icon: const Icon(Icons.list),
                   ),
                 ],
               ),
             ),
-            SizedBox(height: 20.0),
+            const SizedBox(height: 20.0),
             SizedBox(
-              height: 210,
+              height: 190,
               child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: listDish.length,
@@ -145,39 +125,32 @@ class _HomePageMobileState extends State<HomePageMobile> {
                         child: Padding(
                           padding: const EdgeInsets.all(10.0),
                           child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Container (
-                                height: 120,
-                                width: 120,
+                              SizedBox(
+                                height: 100,
+                                width: 100,
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(10),
                                   child: Image.asset(dish.imageURL, fit: BoxFit.cover),
                                 ),
                               ),
-                              SizedBox(height: 10.0),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        dish.name,
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                              const SizedBox(height: 10.0),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 5.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      dish.name,
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.w600,
                                       ),
-                                      SizedBox(height: 5.0),
-                                      Text(dish.description),
-                                    ],
-                                  ),
-                                  Icon(
-                                    //Icons.star_border,
-                                    dish.isFav ? Icons.star : Icons.star_border,
-                                    color: Colors.amber,
-                                  ),
-                                ],
+                                    ),
+                                    const SizedBox(height: 5.0),
+                                    Text('Rp${dish.price}', style: const TextStyle(fontWeight: FontWeight.bold),),
+                                  ],
+                                ),
                               ),
                             ],
                           ),
@@ -187,13 +160,13 @@ class _HomePageMobileState extends State<HomePageMobile> {
                   }
               ),
             ),
-            SizedBox(height: 20.0),
+            const SizedBox(height: 20.0),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Text(
+                  const Text(
                     'Place',
                     style: TextStyle(
                       fontSize: 16,
@@ -203,23 +176,20 @@ class _HomePageMobileState extends State<HomePageMobile> {
                   IconButton(
                     onPressed: () {
                       Navigator.push(context, MaterialPageRoute(builder: (context) {
-                        return ListPage(title: 'Place');
+                        return const ListPage(title: 'Place');
                       }));
                     },
-                    icon: Icon(Icons.list),
+                    icon: const Icon(Icons.list),
                   ),
                 ],
               ),
             ),
-            SizedBox(height: 20.0),
-            RestaurantPlaceList(),
+            const SizedBox(height: 20.0),
+            const RestaurantPlaceList(),
           ],
         ),
       ),
     );
-  }
-  refresh() {
-    setState(() {});
   }
 }
 
@@ -252,7 +222,7 @@ class RestaurantPlaceList extends StatelessWidget {
                   flex: 1,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Container(
+                    child: SizedBox(
                       height: 100,
                       width: 120,
                       child: ClipRRect(
@@ -264,7 +234,7 @@ class RestaurantPlaceList extends StatelessWidget {
                 ),
                 Expanded(
                   child: Padding(
-                    padding: EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(8.0),
                     child: Padding(
                       padding: const EdgeInsets.only(top: 5.0),
                       child: Column(
@@ -272,28 +242,28 @@ class RestaurantPlaceList extends StatelessWidget {
                         children: <Widget>[
                           Text(
                             place.name,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                           Text(place.description),
-                          Divider(),
+                          const Divider(),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Icon(Icons.chair, size: 18),
-                                  SizedBox(width: 5.0),
-                                  Text('3'),
+                                  const Icon(Icons.chair, size: 14, color: Colors.black54),
+                                  const SizedBox(width: 5.0),
+                                  Text(place.seats.toString(), style: const TextStyle(color: Colors.black54)),
                                 ],
                               ),
                               Row(
                                 children: [
-                                  Icon(Icons.table_restaurant, size: 18),
-                                  SizedBox(width: 5.0),
-                                  Text('12'),
+                                  const Icon(Icons.table_restaurant, size: 14, color: Colors.black54),
+                                  const SizedBox(width: 5.0),
+                                  Text(place.tables.toString(),  style: const TextStyle(color: Colors.black54)),
                                 ],
                               ),
                             ],
@@ -308,7 +278,7 @@ class RestaurantPlaceList extends StatelessWidget {
           ),
         );
       },
-      itemCount: restaurantPlaceList.length,
+      itemCount: 3,
     );
   }
 }
