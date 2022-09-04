@@ -5,15 +5,10 @@ import 'package:restaurant_booking_system/component/list_page.dart';
 import 'package:restaurant_booking_system/model/dish.dart';
 import 'package:restaurant_booking_system/model/place.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
 
   const HomePage({Key? key}) : super(key: key);
 
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
 
@@ -25,15 +20,10 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-class HomePageMobile extends StatefulWidget {
+class HomePageMobile extends StatelessWidget {
 
   const HomePageMobile({Key? key}) : super(key: key);
 
-  @override
-  State<HomePageMobile> createState() => _HomePageMobileState();
-}
-
-class _HomePageMobileState extends State<HomePageMobile> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
