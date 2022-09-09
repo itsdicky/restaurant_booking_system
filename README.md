@@ -1,6 +1,7 @@
 # restaurant_booking_system
 
-Restaurant booking system project with Flutter
+Restaurant booking system project with Flutter.
+I build this project for complete Dicoding Course final project.
 
 ## Getting Started
 
